@@ -2,7 +2,7 @@ import secrets
 import warnings
 from typing import Annotated, Any, Literal
 
-from pydantic import PostgresDsn, computed_field
+from pydantic import PostgresDsn, computed_field, MySQLDsn
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -26,10 +26,10 @@ class Settings(BaseSettings):
 
     @computed_field  # type: ignore[misc]
     @property
-    def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
+    def SQLALCHEMY_DATABASE_URI(self) -> MySQLDsn:
 
         return MultiHostUrl.build(
-            scheme="postgresql",
+            scheme="mysql",
             username=settings.DB_USER,
             password=settings.DB_PASSWORD,
             host=settings.DB_HOST,
